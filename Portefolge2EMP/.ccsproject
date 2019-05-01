@@ -7,6 +7,7 @@
 	<deviceEndianness value="little"/>
 	<codegenToolVersion value="GNU_7.2.1:Linaro"/>
 	<isElfFormat value="true"/>
+	<connection value="common/targetdb/connections/Stellaris_ICDI_Connection.xml"/>
 	<linkerCommandFile value="tm4c123gh6pm.lds"/>
 	<rts value="libc.a"/>
 	<createSlaveProjects value=""/>
