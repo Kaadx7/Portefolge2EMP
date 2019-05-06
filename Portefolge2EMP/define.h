@@ -1,8 +1,8 @@
 /*
- * Define.h
+ * define.h
  *
  *  Created on: 6. maj 2019
- *      Author: lars-p
+ *      Author: jmkaa
  */
 
 #ifndef DEFINE_H_

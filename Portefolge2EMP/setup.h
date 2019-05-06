@@ -1,8 +1,8 @@
 /*
- * Setup.h
+ * setup.h
  *
  *  Created on: 6. maj 2019
- *      Author: lars-p
+ *      Author: jmkaa
  */
 
 #ifndef SETUP_H_
