@@ -21,7 +21,7 @@ SemaphoreHandle_t RTC_SEM;
 
 /*****************************   Functions   *******************************/
 
-extern void sem_init()
+extern void init_sem()
 /*****************************************************************************
 *   Input    : -
 *   Output   : -

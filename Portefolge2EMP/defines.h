@@ -18,9 +18,9 @@
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
-//extern uint8_t seconds = 0;
-//extern uint8_t minutes = 0;
-//extern uint8_t hours = 0;
+extern uint8_t seconds;
+extern uint8_t minutes;
+extern uint8_t hours;
 
 
 /*****************************   Semaphores   *******************************/
