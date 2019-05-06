@@ -231,13 +231,32 @@ void UARTReceiveDriver (void * pvParameters)
         {
 
             receive_character = uart0_getc();
-            xQueueSend(xUARTReceive_queue,  &receive_character, (TickType_t) 0); //(void *)
+            xQueueSend(xUARTReceive_queue,  &receive_character, (TickType_t) 0); //
 
         }
-        UARTMessagesWaiting = uxQueueMessagesWaiting(xUARTReceive_queue);
         //GPIO_PORTF_DATA_R ^= 0x08;
         //vTaskDelayUntil (&xLastWakeTime, pdMS_TO_TICKS( 50 ) );
         vTaskDelay(pdMS_TO_TICKS( 50 ));
+    }
+}
+
+void UARTTransmitDriver (void * pvParameters)
+{
+    TickType_t xLastWakeTime;
+    xLastWakeTime = xTaskGetTickCount();
+
+    QueueHandle_t xUARTTransmit_queue;
+    uint8_t *byte_from_queue = 0;
+
+    for (;;)
+    {
+        if (xQueueReceive( xUARTTransmit_queue, &byte_from_queue , ( TickType_t ) portMAX_DELAY ) == pdTRUE);
+        {
+            if (uart0_tx_rdy())
+            {
+                uart0_putc(byte_from_queue); // Transmit byte to PC
+            }
+        }
     }
 }
 

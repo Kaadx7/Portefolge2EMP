@@ -63,12 +63,22 @@ extern void uart0_init( uint32_t, uint8_t, uint8_t, uint8_t );
 *   Function : Initialize uart 0
 ******************************************************************************/
 
-//User defined functions - 4. semester projekt
-void get_uart_message(void);
+
+
+/*****************************     Tasks     *******************************/
+
+void UARTReceiveDriver (void * pvParameters);
 /*****************************************************************************
 *   Input    : -
 *   Output   : -
-*   Function : Put character to UART queue
+*   Function : Put character to UART Receive queue to be obtained by UART protocol
+******************************************************************************/
+
+void UARTTransmitDriver (void * pvParameters);
+/*****************************************************************************
+*   Input    : -
+*   Output   : -
+*   Function : Take character from UART Transmit queue to be transmitted to PC
 ******************************************************************************/
 
 /****************************** End Of Module *******************************/
