@@ -15,6 +15,8 @@
 #include "tm4c123gh6pm.h"
 #include "gpio.h"
 
+#include "defines.h"
+#include "setup.h"
 
 /*****************************    Defines    *******************************/
 //#define USERTASK_STACK_SIZE configMINIMAL_STACK_SIZE
@@ -23,14 +25,9 @@
 #define MED_PRIO  2
 #define HIGH_PRIO 3
 
-
-
-
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
-
-
 
 /*****************************   Functions   *******************************/
 
