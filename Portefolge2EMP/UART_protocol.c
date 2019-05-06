@@ -16,6 +16,10 @@
 #include "tm4c123gh6pm.h"
 #include "UART_protocol.h"
 
+// FreeRTOS includes
+#include "FreeRTOS.h"
+#include "queue.h"
+
 /*****************************    Defines    *******************************/
 
 /*****************************   Constants   *******************************/
@@ -33,10 +37,10 @@ void UARTProtocol (void * pvParameters)
 
     for (;;)
     {
-        if (xQueueReceive( xUARTTransmit_queue, &byte_from_queue , ( TickType_t ) portMAX_DELAY ) == pdTRUE);
-        {
-            byte_from_queue_nop = *byte_from_queue;
-        }
+//        if (xQueueReceive( xUARTTransmit_queue, &byte_from_queue , ( TickType_t ) portMAX_DELAY ) == pdTRUE);
+//        {
+//            byte_from_queue_nop = *byte_from_queue;
+//        }
     }
 }
 

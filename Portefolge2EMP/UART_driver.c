@@ -27,8 +27,9 @@
 #include "UART_driver.h"
 
 //FreeRTOS kernel includes
-//#include "queue.h"
-//#include "FreeRTOS.h"
+
+#include "FreeRTOS.h"
+#include "queue.h"
 
 /*****************************    Defines    *******************************/
 
@@ -220,7 +221,7 @@ void UARTReceiveDriver (void * pvParameters)
 {
     TickType_t xLastWakeTime;
     xLastWakeTime = xTaskGetTickCount();
-
+    uint8_t *receive_character = 0;
 	QueueHandle_t xUARTReceive_queue;
     //Queue creation
 
