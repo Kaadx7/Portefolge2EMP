@@ -38,8 +38,9 @@ int main(void)
 {
     init_gpio();
 
+    // Init queues.
+    // --------------
 
-    //xSemaphoreTake();
     // Start the tasks.
     // ----------------
 
