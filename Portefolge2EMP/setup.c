@@ -16,6 +16,8 @@
 
 
 /****************************   Semaphores   *******************************/
+SemaphoreHandle_t RTC_SEM;
+
 
 /*****************************   Functions   *******************************/
 
@@ -26,7 +28,10 @@ extern void sem_init()
 *   Function : -
 ******************************************************************************/
 {
-    //Initialize semaphores here, remember to include them above in semaphore tab
+    RTC_SEM = xSemaphoreCreateCounting(1, 1);
+
+
+
 }
 
 

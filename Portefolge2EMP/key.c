@@ -35,6 +35,8 @@ extern void key_task(void * pvParameters)
 
   for( ;; )
   {
+      vTaskDelayUntil (&xLastWakeTime, pdMS_TO_TICKS( 10 ) );
+
       switch( state )
       {
         case 0:
@@ -74,9 +76,6 @@ extern void key_task(void * pvParameters)
           break;
       }
   }
-
-
-  vTaskDelayUntil (&xLastWakeTime, pdMS_TO_TICKS( 10 ) );
 }
 
 extern void testkey_task(void * pvParameters)

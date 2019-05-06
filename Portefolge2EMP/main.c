@@ -34,11 +34,17 @@
 int main(void)
 {
     init_gpio();
+    init_sem();
+
 
     // Taskhandles - made extern in defines.h
     // ----------------
     TaskHandle_t keypad_handle = NULL;
+    TaskHandle_t RTC_handle = NULL;
+
+    // For testing
     TaskHandle_t testKeypad_handle = NULL;
+
 
 
     // Create queues
@@ -49,6 +55,9 @@ int main(void)
     // Start the tasks.
     // ----------------
     xTaskCreate(key_task, "Keypad task", 100, NULL, 1, &keypad_handle);
+    xTaskCreate(RTC_task, "Real Time Clock task", 100, NULL, 1, &RTC_handle);
+
+    // For testing
     xTaskCreate(testkey_task, "Test keypad task", 100, NULL, 1, &testKeypad_handle);
 
 
