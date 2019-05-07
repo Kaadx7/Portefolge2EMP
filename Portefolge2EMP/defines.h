@@ -15,6 +15,14 @@
 #include "gpio.h"
 /*****************************    Defines    *******************************/
 
+#define FALSE   0
+#define TRUE  !FALSE
+#define NULL    ((void *)0)
+#define NEGATIVE 0
+#define POSITIVE 1
+#define LEFT    0
+#define RIGHT   1
+
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
@@ -29,6 +37,7 @@ extern SemaphoreHandle_t RTC_SEM;
 
 /*****************************    Queues    *******************************/
 QueueHandle_t keypad_queue;
+QueueHandle_t lcd_queue;
 
 
 /*****************************   Tasks   *******************************/
@@ -38,6 +47,9 @@ extern TaskHandle_t RTC_handle;
 
 
 extern TaskHandle_t testKeypad_handle;
+
+
+extern TaskHandle_t lcd_handle;
 
 
 

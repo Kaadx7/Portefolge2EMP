@@ -16,7 +16,7 @@
 				<configuration artifactExtension="out" artifactName="${ProjName}" buildProperties="" cleanCommand="${CG_CLEAN_CMD}" description="" id="com.ti.ccstudio.buildDefinitions.TMS470.Debug.1433905928" name="Debug" parent="com.ti.ccstudio.buildDefinitions.TMS470.Debug">
 					<folderInfo id="com.ti.ccstudio.buildDefinitions.TMS470.Debug.1433905928." name="/" resourcePath="">
 						<toolChain id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.exe.DebugToolchain.873493422" name="TI Build Tools" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.exe.DebugToolchain" targetTool="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.exe.linkerDebug.442021277">
-							<option id="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.1569059518" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS" valueType="stringList">
+							<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.1569059518" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS" valueType="stringList">
 								<listOptionValue builtIn="false" value="DEVICE_CONFIGURATION_ID=Cortex M.TM4C123GH6PM"/>
 								<listOptionValue builtIn="false" value="DEVICE_ENDIANNESS=little"/>
 								<listOptionValue builtIn="false" value="OUTPUT_FORMAT=ELF"/>
@@ -36,21 +36,22 @@
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.MFLOAT_ABI.1829813630" name="Use floating point hardware (-mfloat-abi)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.MFLOAT_ABI" useByScannerDiscovery="false" value="hard" valueType="string"/>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.FUNCTION_SECTIONS.972493366" name="Place each function into its own section (-ffunction-sections)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.FUNCTION_SECTIONS" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DATA_SECTIONS.698635114" name="Place data items into their own section (-fdata-sections)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DATA_SECTIONS" useByScannerDiscovery="false" value="true" valueType="boolean"/>
-								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEFINE.2129613881" name="Define symbols (-D)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEFINE" valueType="definedSymbols">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEFINE.2129613881" name="Define symbols (-D)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEFINE" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="PART_TM4C123GH6PM"/>
 								</option>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEBUG.1736327477" name="Generate debug information (-g)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEBUG" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.STRICT_DWARF.1938016172" name="Do not emit DWARF additions beyond selected version (-gstrict-dwarf)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.STRICT_DWARF" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DWARF_VERSION.1497803072" name="Generate debug information in DWARF version (-gdwarf-)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DWARF_VERSION" useByScannerDiscovery="false" value="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DWARF_VERSION.3" valueType="enumerated"/>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.OPT_LEVEL.672498078" name="Optimization Level" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.OPT_LEVEL" useByScannerDiscovery="false" value="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.OPT_LEVEL.0" valueType="enumerated"/>
-								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH.1600638219" name="Include paths (-I)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH" valueType="includePath">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH.1600638219" name="Include paths (-I)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH" valueType="includePath">
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}"/>
 									<listOptionValue builtIn="false" value="${CG_TOOL_INCLUDE_PATH}"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Users\Jakob\Google Drive\01 SDU\04 4. Semester\05 4. semesterprojekt\4-semester-project\FreeRTOSv10.2.0\FreeRTOS\Source\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Users\jmkaa\git\4-semester-project\FreeRTOSv10.2.0\FreeRTOS\Source\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Users\chris\Documents\FreeRTOSv10.2.0\FreeRTOS\Source\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\lars-p\Documents\4-semester-project\FreeRTOSv10.2.0\FreeRTOS\Source\include&quot;"/>
 								</option>
-								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.ASM_SPECIFIC_FLAGS.387651590" name="Miscellaneous assembly source specific flags" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.ASM_SPECIFIC_FLAGS" useByScannerDiscovery="false" valueType="stringList">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.ASM_SPECIFIC_FLAGS.387651590" name="Miscellaneous assembly source specific flags" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.ASM_SPECIFIC_FLAGS" useByScannerDiscovery="false" valueType="stringList">
 									<listOptionValue builtIn="false" value="-x assembler-with-cpp"/>
 								</option>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.SPECS.2008388987" name="Override built-in specs with the contents of the specified file (-specs)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.SPECS" useByScannerDiscovery="false" value="&quot;nosys.specs&quot;" valueType="string"/>
@@ -89,7 +90,7 @@
 				<configuration artifactExtension="out" artifactName="${ProjName}" buildProperties="" cleanCommand="${CG_CLEAN_CMD}" description="" id="com.ti.ccstudio.buildDefinitions.TMS470.Release.306644343" name="Release" parent="com.ti.ccstudio.buildDefinitions.TMS470.Release">
 					<folderInfo id="com.ti.ccstudio.buildDefinitions.TMS470.Release.306644343." name="/" resourcePath="">
 						<toolChain id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.exe.ReleaseToolchain.1996533066" name="TI Build Tools" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.exe.ReleaseToolchain" targetTool="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.exe.linkerRelease.2064584390">
-							<option id="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.594135599" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS" valueType="stringList">
+							<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.594135599" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS" valueType="stringList">
 								<listOptionValue builtIn="false" value="DEVICE_CONFIGURATION_ID=Cortex M.TM4C123GH6PM"/>
 								<listOptionValue builtIn="false" value="DEVICE_ENDIANNESS=little"/>
 								<listOptionValue builtIn="false" value="OUTPUT_FORMAT=ELF"/>
@@ -109,17 +110,18 @@
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.MFLOAT_ABI.861982101" name="Use floating point hardware (-mfloat-abi)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.MFLOAT_ABI" useByScannerDiscovery="false" value="hard" valueType="string"/>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.FUNCTION_SECTIONS.366375417" name="Place each function into its own section (-ffunction-sections)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.FUNCTION_SECTIONS" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DATA_SECTIONS.810248515" name="Place data items into their own section (-fdata-sections)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DATA_SECTIONS" useByScannerDiscovery="false" value="true" valueType="boolean"/>
-								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEFINE.1833485010" name="Define symbols (-D)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEFINE" valueType="definedSymbols">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEFINE.1833485010" name="Define symbols (-D)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEFINE" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="PART_TM4C123GH6PM"/>
 								</option>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.OPT_LEVEL.release.36095428" name="Optimization Level" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.OPT_LEVEL.release" useByScannerDiscovery="false" value="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.OPT_LEVEL.OPT_FOR_SPACE" valueType="enumerated"/>
-								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH.335089859" name="Include paths (-I)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH" valueType="includePath">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH.335089859" name="Include paths (-I)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH" valueType="includePath">
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}"/>
 									<listOptionValue builtIn="false" value="${CG_TOOL_INCLUDE_PATH}"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Users\chris\Documents\4sem_code_git\4-semester-project\FreeRTOSv10.2.0\FreeRTOS\Source\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Users\chris\Documents\FreeRTOSv10.2.0\FreeRTOS\Source\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\lars-p\Documents\4-semester-project\FreeRTOSv10.2.0\FreeRTOS\Source\include&quot;"/>
 								</option>
-								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.ASM_SPECIFIC_FLAGS.1971165481" name="Miscellaneous assembly source specific flags" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.ASM_SPECIFIC_FLAGS" useByScannerDiscovery="false" valueType="stringList">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.ASM_SPECIFIC_FLAGS.1971165481" name="Miscellaneous assembly source specific flags" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.ASM_SPECIFIC_FLAGS" useByScannerDiscovery="false" valueType="stringList">
 									<listOptionValue builtIn="false" value="-x assembler-with-cpp"/>
 								</option>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.SPECS.375095008" name="Override built-in specs with the contents of the specified file (-specs)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.SPECS" useByScannerDiscovery="false" value="&quot;nosys.specs&quot;" valueType="string"/>
@@ -158,7 +160,7 @@
 				<configuration artifactExtension="out" artifactName="${ProjName}" buildProperties="" cleanCommand="${CG_CLEAN_CMD}" description="" id="com.ti.ccstudio.buildDefinitions.TMS470.Debug.1411125592" name="Debug" parent="com.ti.ccstudio.buildDefinitions.TMS470.Debug">
 					<folderInfo id="com.ti.ccstudio.buildDefinitions.TMS470.Debug.1411125592." name="/" resourcePath="">
 						<toolChain id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.exe.DebugToolchain.253645119" name="TI Build Tools" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.exe.DebugToolchain" targetTool="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.exe.linkerDebug.1402285524">
-							<option id="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.1408760541" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS" valueType="stringList">
+							<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.1408760541" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS" valueType="stringList">
 								<listOptionValue builtIn="false" value="DEVICE_CONFIGURATION_ID=Cortex M.TM4C123GH6PM"/>
 								<listOptionValue builtIn="false" value="DEVICE_ENDIANNESS=little"/>
 								<listOptionValue builtIn="false" value="OUTPUT_FORMAT=ELF"/>
@@ -178,20 +180,21 @@
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.MFLOAT_ABI.1594086245" name="Use floating point hardware (-mfloat-abi)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.MFLOAT_ABI" useByScannerDiscovery="false" value="hard" valueType="string"/>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.FUNCTION_SECTIONS.647957836" name="Place each function into its own section (-ffunction-sections)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.FUNCTION_SECTIONS" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DATA_SECTIONS.398633654" name="Place data items into their own section (-fdata-sections)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DATA_SECTIONS" useByScannerDiscovery="false" value="true" valueType="boolean"/>
-								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEFINE.1264379569" name="Define symbols (-D)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEFINE" valueType="definedSymbols">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEFINE.1264379569" name="Define symbols (-D)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEFINE" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="PART_TM4C123GH6PM"/>
 								</option>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEBUG.20191583" name="Generate debug information (-g)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEBUG" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.STRICT_DWARF.1119903017" name="Do not emit DWARF additions beyond selected version (-gstrict-dwarf)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.STRICT_DWARF" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DWARF_VERSION.396831560" name="Generate debug information in DWARF version (-gdwarf-)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DWARF_VERSION" useByScannerDiscovery="false" value="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DWARF_VERSION.3" valueType="enumerated"/>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.OPT_LEVEL.1561496201" name="Optimization Level" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.OPT_LEVEL" useByScannerDiscovery="false" value="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.OPT_LEVEL.OPT_FOR_DEBUG" valueType="enumerated"/>
-								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH.1394307196" name="Include paths (-I)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH" valueType="includePath">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH.1394307196" name="Include paths (-I)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH" valueType="includePath">
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}"/>
 									<listOptionValue builtIn="false" value="${CG_TOOL_INCLUDE_PATH}"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Users\chris\Documents\FreeRTOSv10.2.0\FreeRTOS\Source\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Users\jmkaa\git\4-semester-project\FreeRTOSv10.2.0\FreeRTOS\Source\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\lars-p\Documents\4-semester-project\FreeRTOSv10.2.0\FreeRTOS\Source\include&quot;"/>
 								</option>
-								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.ASM_SPECIFIC_FLAGS.1240931437" name="Miscellaneous assembly source specific flags" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.ASM_SPECIFIC_FLAGS" useByScannerDiscovery="false" valueType="stringList">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.ASM_SPECIFIC_FLAGS.1240931437" name="Miscellaneous assembly source specific flags" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.ASM_SPECIFIC_FLAGS" useByScannerDiscovery="false" valueType="stringList">
 									<listOptionValue builtIn="false" value="-x assembler-with-cpp"/>
 								</option>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.SPECS.790224820" name="Override built-in specs with the contents of the specified file (-specs)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.SPECS" useByScannerDiscovery="false" value="&quot;nosys.specs&quot;" valueType="string"/>
@@ -230,7 +233,7 @@
 				<configuration artifactExtension="out" artifactName="${ProjName}" buildProperties="" cleanCommand="${CG_CLEAN_CMD}" description="" id="com.ti.ccstudio.buildDefinitions.TMS470.Release.785839273" name="Release" parent="com.ti.ccstudio.buildDefinitions.TMS470.Release">
 					<folderInfo id="com.ti.ccstudio.buildDefinitions.TMS470.Release.785839273." name="/" resourcePath="">
 						<toolChain id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.exe.ReleaseToolchain.854185975" name="TI Build Tools" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.exe.ReleaseToolchain" targetTool="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.exe.linkerRelease.1937626782">
-							<option id="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.12109485" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS" valueType="stringList">
+							<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.12109485" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS" valueType="stringList">
 								<listOptionValue builtIn="false" value="DEVICE_CONFIGURATION_ID=Cortex M.TM4C123GH6PM"/>
 								<listOptionValue builtIn="false" value="DEVICE_ENDIANNESS=little"/>
 								<listOptionValue builtIn="false" value="OUTPUT_FORMAT=ELF"/>
@@ -250,16 +253,17 @@
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.MFLOAT_ABI.35077060" name="Use floating point hardware (-mfloat-abi)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.MFLOAT_ABI" useByScannerDiscovery="false" value="hard" valueType="string"/>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.FUNCTION_SECTIONS.849429932" name="Place each function into its own section (-ffunction-sections)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.FUNCTION_SECTIONS" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DATA_SECTIONS.1500885591" name="Place data items into their own section (-fdata-sections)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DATA_SECTIONS" useByScannerDiscovery="false" value="true" valueType="boolean"/>
-								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEFINE.2120536601" name="Define symbols (-D)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEFINE" valueType="definedSymbols">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEFINE.2120536601" name="Define symbols (-D)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.DEFINE" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="PART_TM4C123GH6PM"/>
 								</option>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.OPT_LEVEL.release.1752769507" name="Optimization Level" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.OPT_LEVEL.release" useByScannerDiscovery="false" value="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.OPT_LEVEL.OPT_FOR_SPACE" valueType="enumerated"/>
-								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH.1400027710" name="Include paths (-I)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH" valueType="includePath">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH.1400027710" name="Include paths (-I)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.INCLUDE_PATH" valueType="includePath">
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}"/>
 									<listOptionValue builtIn="false" value="${CG_TOOL_INCLUDE_PATH}"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Users\chris\Documents\FreeRTOSv10.2.0\FreeRTOS\Source\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\lars-p\Documents\4-semester-project\FreeRTOSv10.2.0\FreeRTOS\Source\include&quot;"/>
 								</option>
-								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.ASM_SPECIFIC_FLAGS.1617496096" name="Miscellaneous assembly source specific flags" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.ASM_SPECIFIC_FLAGS" useByScannerDiscovery="false" valueType="stringList">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.ASM_SPECIFIC_FLAGS.1617496096" name="Miscellaneous assembly source specific flags" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.ASM_SPECIFIC_FLAGS" useByScannerDiscovery="false" valueType="stringList">
 									<listOptionValue builtIn="false" value="-x assembler-with-cpp"/>
 								</option>
 								<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.SPECS.1021768274" name="Override built-in specs with the contents of the specified file (-specs)" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_7.0.compilerID.SPECS" useByScannerDiscovery="false" value="&quot;nosys.specs&quot;" valueType="string"/>
