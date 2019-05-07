@@ -6,10 +6,12 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stddef.h>
+#include <stdbool.h>
+
 #include "FreeRTOS.h"
 #include "task.h"
 #include "semphr.h"
-
+#include "event_groups.h"
 
 #include "tm4c123gh6pm.h"
 #include "gpio.h"
@@ -18,17 +20,26 @@
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
-extern uint8_t seconds;
-extern uint8_t minutes;
-extern uint8_t hours;
+// RTC
+extern uint8_t      seconds;
+extern uint8_t      minutes;
+extern uint8_t      hours;
+
+// Pump station
+extern uint32_t     pulses;
+extern bool         handle;
+extern bool         shunt;
+extern bool         pump;
 
 
 /*****************************   Semaphores   *******************************/
 extern SemaphoreHandle_t RTC_SEM;
 
 
-/*****************************    Queues    *******************************/
+/*************************  Queues & Event Groups  *******************************/
 QueueHandle_t keypad_queue;
+
+EventGroupHandle_t pump_event;
 
 
 /*****************************   Tasks   *******************************/

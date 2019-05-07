@@ -32,7 +32,7 @@ extern void RTC_task(void * pvParameters)
     for( ;; )
     {
 
-
+        vTaskDelayUntil (&xLastWakeTime, pdMS_TO_TICKS( 1000 ) );
         if( xSemaphoreTake(RTC_SEM, 0) == pdTRUE )
         {
             seconds++;
@@ -55,7 +55,7 @@ extern void RTC_task(void * pvParameters)
             xSemaphoreGive( RTC_SEM );
         }
 
-        vTaskDelayUntil (&xLastWakeTime, pdMS_TO_TICKS( 1000 ) );
+
     }
 }
 

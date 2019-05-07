@@ -1,10 +1,3 @@
-/*
- * gpio.c
- *
- *  Created on: 13. mar. 2019
- *      Author: chris
- */
-
 /***************************** Include files *******************************/
 #include <stdint.h>
 #include "tm4c123gh6pm.h"

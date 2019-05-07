@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stddef.h>
+#include <stdbool.h>
 
 /* Kernel includes. */
 #include "FreeRTOS.h"
@@ -14,10 +15,12 @@
 #include "tm4c123gh6pm.h"
 #include "gpio.h"
 
+#include "event_groups.h"
 #include "defines.h"
 #include "setup.h"
 #include "key.h"
 #include "RTC.h"
+#include "pulse.h"
 
 //#include "lcd_driver.h"
 
@@ -43,11 +46,15 @@ int main(void)
     // ----------------
     TaskHandle_t keypad_handle = NULL;
     TaskHandle_t RTC_handle = NULL;
+    //TaskHandle_t lcd_handle = NULL;
 
     TaskHandle_t testKeypad_handle = NULL;
 
-    //TaskHandle_t lcd_handle = NULL;
 
+
+    // Create eventgroups
+    // ----------------
+    pump_event = xEventGroupCreate();
 
     // Create queues
     // ----------------
