@@ -8,6 +8,7 @@
 #include "defines.h"
 #include "setup.h"
 #include "key.h"
+#include "digisw.h"
 /*****************************    Defines    *******************************/
 
 /*****************************   Constants   *******************************/
@@ -87,11 +88,15 @@ extern void testkey_task(void * pvParameters)
 {
     for( ;; )
     {
+        if( xQueueReceive( digiSwitch_queue, &characterReceived, portMAX_DELAY ) == pdPASS )
+        {
+            received = characterReceived;
+        }
         if( xQueueReceive( keypad_queue, &characterReceived, portMAX_DELAY ) == pdPASS )
         {
             received = characterReceived;
         }
-    }
+   }
 
 }
 

@@ -17,6 +17,12 @@
 #include "gpio.h"
 /*****************************    Defines    *******************************/
 
+// Digiswitch Events
+#define DSE_CW      '1'
+#define DSE_CCW     '2'
+#define DSE_PRESS   '3'
+
+
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
@@ -26,27 +32,27 @@ extern uint8_t      minutes;
 extern uint8_t      hours;
 
 // Pump station
-extern uint32_t     pulses;
-extern bool         handle;
-extern bool         shunt;
+extern float        pulses;
 extern bool         pump;
+extern bool         hook;
+extern bool         handle_pressed;
+extern bool         shunt;
+
 
 
 /*****************************   Semaphores   *******************************/
 extern SemaphoreHandle_t RTC_SEM;
 
-
 /*************************  Queues & Event Groups  *******************************/
 QueueHandle_t keypad_queue;
-
-EventGroupHandle_t pump_event;
-
+QueueHandle_t digiSwitch_queue;
 
 /*****************************   Tasks   *******************************/
 extern TaskHandle_t keypad_handle;
 extern TaskHandle_t RTC_handle;
-
-
+extern TaskHandle_t pump_handle;
+extern TaskHandle_t digiSwitch_handle;
+extern TaskHandle_t switch_handle;
 
 extern TaskHandle_t testKeypad_handle;
 
