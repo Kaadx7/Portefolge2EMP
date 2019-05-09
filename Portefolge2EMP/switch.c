@@ -36,7 +36,7 @@ void switch_task(void *pvParameters)
     xLastWakeTime = xTaskGetTickCount();
     bool sw1 = 0;
     bool sw1_pressed = 0;
-    bool sw2 = 0;
+
     for( ;; )
     {
 
@@ -72,18 +72,30 @@ void switch_task(void *pvParameters)
             break;
         }
 
+        if( hook == 1)
+        {
+            //SW2 is for valve in handle handle
+            if ( !(GPIO_PORTF_DATA_R & 0x01) )  //Is pushed
+                handle_pressed = 1;
+            else
+                handle_pressed = 0;
+        }
+        else
+           handle_pressed = 0;
 
+
+        //if ( GPIO_PORTF_DATA_R & 0x01 )
         if( hook == 1 )
             GPIO_PORTF_DATA_R |= 0x02;
         else
             GPIO_PORTF_DATA_R &= ~(0x02);
 
+        if( handle_pressed == 1)
+            GPIO_PORTF_DATA_R |= 0x08;
+        else
+            GPIO_PORTF_DATA_R &= ~(0x08);
 
-        // SW2 is for valve in handle handle
-        //if ( GPIO_PORTF_DATA_R & 0x01 )
-
-
-        vTaskDelayUntil (&xLastWakeTime, pdMS_TO_TICKS(20) );
+        vTaskDelayUntil (&xLastWakeTime, pdMS_TO_TICKS(25) );
     }
 
 

@@ -54,20 +54,6 @@ void digiSwitch_task(void *pvParameters)
   digisw_init();
   for( ;; )
   {
-    temp1 = (GPIO_PORTA_DATA_R);
-    if( temp1 == 1 )
-    {
-        volatile int k = 0;
-        k++;
-    }
-
-    temp2 = (GPIO_PORTA_DATA_R & 0x40);
-    if( temp1 == 1 )
-    {
-        volatile int k = 0;
-        k++;
-        k = k*2;
-    }
 
     if( GPIO_PORTA_DATA_R & 0x20 ){
       if( digisw_state != DSS_A_ON ){
