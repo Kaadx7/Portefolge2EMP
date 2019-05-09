@@ -90,7 +90,8 @@ extern void testkey_task(void * pvParameters)
     {
         if( xQueueReceive( keypad_queue, &characterReceived, portMAX_DELAY ) == pdPASS )
         {
-            received = characterReceived;
+
+            xQueueSend( lcd_queue, &characterReceived, 0 );
         }
     }
 
