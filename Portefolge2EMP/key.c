@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stddef.h>
+#include "stdbool.h"
 #include "tm4c123gh6pm.h"
 
 
@@ -34,6 +35,8 @@ extern void key_task(void * pvParameters)
   TickType_t xLastWakeTime;
   xLastWakeTime = xTaskGetTickCount();
 
+  bool isPushed = 0;
+
   for( ;; )
   {
       vTaskDelayUntil (&xLastWakeTime, pdMS_TO_TICKS( 10 ) );
@@ -51,10 +54,18 @@ extern void key_task(void * pvParameters)
           y = GPIO_PORTE_DATA_R & 0x0F;
           if( y )
           {
-            GPIO_PORTF_DATA_R &= 0xFD;
-            ch = key_catch( x, row(y) );
-            xQueueSend( keypad_queue, &ch, 0 );
-            state = 2;
+            if( isPushed = 0 )
+            {
+                GPIO_PORTF_DATA_R &= 0xFD;
+                ch = key_catch( x, row(y) );
+                xQueueSend( keypad_queue, &ch, 0 );
+                isPushed = 1;
+            }
+            else
+            {
+               state = 2;
+               isPushed = 0;
+            }
           }
           else
           {
