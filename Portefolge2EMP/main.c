@@ -38,6 +38,9 @@ int main(void)
 {
     init_gpio();
 
+    // Create queues
+    xUARTTransmit_queue = xQueueCreate ( 10, 8 );
+    xUARTReceive_queue = xQueueCreate ( 10, 8 );
 
     //xSemaphoreTake();
     // Start the tasks.

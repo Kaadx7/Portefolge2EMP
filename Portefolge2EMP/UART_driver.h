@@ -67,14 +67,14 @@ extern void uart0_init( uint32_t, uint8_t, uint8_t, uint8_t );
 
 /*****************************     Tasks     *******************************/
 
-void UARTReceiveDriver (void * pvParameters);
+void UARTReceiveDriverTask (void * pvParameters);
 /*****************************************************************************
 *   Input    : -
 *   Output   : -
 *   Function : Put character to UART Receive queue to be obtained by UART protocol
 ******************************************************************************/
 
-void UARTTransmitDriver (void * pvParameters);
+void UARTTransmitDriverTask (void * pvParameters);
 /*****************************************************************************
 *   Input    : -
 *   Output   : -

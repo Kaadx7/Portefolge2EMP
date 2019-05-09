@@ -222,7 +222,7 @@ void UARTReceiveDriver (void * pvParameters)
     TickType_t xLastWakeTime;
     xLastWakeTime = xTaskGetTickCount();
     uint8_t *receive_character = 0;
-	QueueHandle_t xUARTReceive_queue;
+
     //Queue creation
 
 
@@ -241,12 +241,12 @@ void UARTReceiveDriver (void * pvParameters)
     }
 }
 
-void UARTTransmitDriver (void * pvParameters)
+void UARTTransmitDriverTask (void * pvParameters)
 {
     TickType_t xLastWakeTime;
     xLastWakeTime = xTaskGetTickCount();
 
-    QueueHandle_t xUARTTransmit_queue;
+
     uint8_t *byte_from_queue = 0;
 
     for (;;)
