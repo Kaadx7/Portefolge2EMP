@@ -235,7 +235,7 @@ void out_LCD( uint8_t Ch )
 
 
   out_LCD_low( Ch );
-  for(i=0; i<1000; i++);
+  //for(i=0; i<1000; i++);
 }
 
 
@@ -247,7 +247,7 @@ extern void lcd_task(void * pvParameters)
 *   Function :
 ******************************************************************************/
 {
-    uint8_t my_state = LCD_POWER_UP;
+    static my_state = LCD_POWER_UP;
   uint8_t ch;
 
   TickType_t xLastWakeTime;
@@ -279,6 +279,7 @@ extern void lcd_task(void * pvParameters)
     case LCD_READY:
       if( xQueueReceive( lcd_queue, &ch, 0 ) == pdPASS )
       {
+          vTaskDelay(10);
         switch( ch )
         {
           case 0xFF:
@@ -289,7 +290,7 @@ extern void lcd_task(void * pvParameters)
             break;
           default:
             out_LCD( ch );
-
+            break;
         }
       }
       break;
