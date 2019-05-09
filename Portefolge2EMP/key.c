@@ -2,12 +2,14 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stddef.h>
+#include "stdbool.h"
 #include "tm4c123gh6pm.h"
 
 
 #include "defines.h"
 #include "setup.h"
 #include "key.h"
+#include "digisw.h"
 /*****************************    Defines    *******************************/
 
 /*****************************   Constants   *******************************/
@@ -33,6 +35,8 @@ extern void key_task(void * pvParameters)
   TickType_t xLastWakeTime;
   xLastWakeTime = xTaskGetTickCount();
 
+  bool isPushed = 0;
+
   for( ;; )
   {
       switch( state )
@@ -48,10 +52,18 @@ extern void key_task(void * pvParameters)
           y = GPIO_PORTE_DATA_R & 0x0F;
           if( y )
           {
-            GPIO_PORTF_DATA_R &= 0xFD;
-            ch = key_catch( x, row(y) );
-            xQueueSend( keypad_queue, &ch, 0 );
-            state = 2;
+            if( isPushed = 0 )
+            {
+                GPIO_PORTF_DATA_R &= 0xFD;
+                ch = key_catch( x, row(y) );
+                xQueueSend( keypad_queue, &ch, 0 );
+                isPushed = 1;
+            }
+            else
+            {
+               state = 2;
+               isPushed = 0;
+            }
           }
           else
           {
@@ -88,12 +100,16 @@ extern void testkey_task(void * pvParameters)
 {
     for( ;; )
     {
+        if( xQueueReceive( digiSwitch_queue, &characterReceived, portMAX_DELAY ) == pdPASS )
+        {
+            received = characterReceived;
+        }
         if( xQueueReceive( keypad_queue, &characterReceived, portMAX_DELAY ) == pdPASS )
         {
 
             xQueueSend( lcd_queue, &characterReceived, 0 );
         }
-    }
+   }
 
 }
 
