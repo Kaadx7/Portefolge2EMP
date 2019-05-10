@@ -24,7 +24,8 @@
 #include "digisw.h"
 #include "switch.h"
 
-//#include "lcd_driver.h"
+
+#include "lcd_driver.h"
 
 /*****************************    Defines    *******************************/
 //#define USERTASK_STACK_SIZE configMINIMAL_STACK_SIZE
@@ -48,7 +49,7 @@ int main(void)
     // ----------------
     TaskHandle_t keypad_handle = NULL;
     TaskHandle_t RTC_handle = NULL;
-    //TaskHandle_t lcd_handle = NULL;
+    TaskHandle_t lcd_handle = NULL;
     TaskHandle_t pump_handle = NULL;
     TaskHandle_t digiSwitch_handle = NULL;
     TaskHandle_t switch_handle = NULL;
@@ -60,6 +61,7 @@ int main(void)
     // ----------------
     keypad_queue = xQueueCreate(15, 8);
     digiSwitch_queue = xQueueCreate(10, 8);
+    lcd_queue = xQueueCreate(15, 8);
 
 
     // Start the tasks.
@@ -70,7 +72,7 @@ int main(void)
     xTaskCreate(pump_task, "Pump task", 100, NULL, 1, &pump_handle);
     xTaskCreate(digiSwitch_task, "Digiswitch task", 100, NULL, 1, &digiSwitch_handle);
     xTaskCreate(switch_task, "SW1 and SW2 task", 100, NULL, 1, &switch_handle);
-    //xTaskCreate(lcd_task, "lcd task", 100, NULL, 1, &lcd_handle);
+    xTaskCreate(lcd_task, "lcd task", 100, NULL, 1, &lcd_handle);
 
     // Start the scheduler.
     // --------------------

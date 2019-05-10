@@ -1,0 +1,327 @@
+/*****************************************************************************
+* University of Southern Denmark
+* Embedded C Programming (ECP)
+*
+* MODULENAME.: leds.c
+*
+* PROJECT....: ECP
+*
+* DESCRIPTION: See module specification file (.h-file).
+*
+* Change Log:
+******************************************************************************
+* Date    Id    Change
+* YYMMDD
+* --------------------
+* 050128  KA    Module created.
+*
+*****************************************************************************/
+
+/***************************** Include files *******************************/
+#include <stdint.h>
+#include "tm4c123gh6pm.h"
+#include "LCD_driver.h"
+#include "setup.h"
+#include "defines.h"
+
+/*****************************    Defines    *******************************/
+
+#define QUEUE_LEN   128
+
+enum LCD_states
+{
+  LCD_POWER_UP,
+  LCD_INIT,
+  LCD_READY,
+  LCD_ESC_RECEIVED,
+};
+
+/*****************************   Constants   *******************************/
+const uint8_t LCD_init_sequense[]=
+{
+  0x30,     // Reset
+  0x30,     // Reset
+  0x30,     // Reset
+  0x20,     // Set 4bit interface
+  0x28,     // 2 lines Display
+  0x0C,     // Display ON, Cursor OFF, Blink OFF
+  0x06,     // Cursor Increment
+  0x01,     // Clear Display
+  0x02,         // Home
+  0xFF      // stop
+};
+
+/*****************************   Variables   *******************************/
+//uint8_t LCD_buf[QUEUE_LEN];
+//uint8_t LCD_buf_head = 0;
+//uint8_t LCD_buf_tail = 0;
+//uint8_t LCD_buf_len  = 0;
+
+enum LCD_states LCD_state = LCD_POWER_UP;
+uint8_t LCD_init;
+
+
+
+/*****************************   Functions   *******************************/
+uint8_t wr_ch_LCD( uint8_t Ch )
+/*****************************************************************************
+*   OBSERVE  : LCD_PROC NEEDS 20 mS TO PRINT OUT ONE CHARACTER
+*   Function : See module specification (.h-file).
+*****************************************************************************/
+{
+  return( xQueueSend( lcd_queue, &Ch, 0 ));
+}
+
+void wr_str_LCD( uint8_t *pStr )
+/*****************************************************************************
+*   Function : See module specification (.h-file).
+*****************************************************************************/
+{
+  while( *pStr )
+  {
+    wr_ch_LCD( *pStr );
+    pStr++;
+  }
+}
+
+void move_LCD( uint8_t x, uint8_t y )
+/*****************************************************************************
+*   Function : See module specification (.h-file).
+*****************************************************************************/
+{
+    uint8_t Pos;
+
+  Pos = y*0x40 + x;
+  Pos |= 0x80;
+  wr_ch_LCD( ESC );
+  wr_ch_LCD( Pos );
+}
+//----------------------------
+
+void wr_ctrl_LCD_low( uint8_t Ch )
+/*****************************************************************************
+*   Input    : -
+*   Output   : -
+*   Function : Write low part of control data to LCD.
+******************************************************************************/
+{
+    uint8_t temp;
+  volatile int i;
+
+  temp = GPIO_PORTC_DATA_R & 0x0F;
+  temp  = temp | ((Ch & 0x0F) << 4);
+  GPIO_PORTC_DATA_R  = temp;
+  for( i=0; i<1000; i )
+      i++;
+  GPIO_PORTD_DATA_R &= 0xFB;        // Select Control mode, write
+  for( i=0; i<1000; i )
+      i++;
+  GPIO_PORTD_DATA_R |= 0x08;        // Set E High
+
+  for( i=0; i<1000; i )
+      i++;
+
+  GPIO_PORTD_DATA_R &= 0xF7;        // Set E Low
+
+  for( i=0; i<1000; i )
+      i++;
+}
+
+void wr_ctrl_LCD_high( uint8_t Ch )
+/*****************************************************************************
+*   Input    : -
+*   Output   : -
+*   Function : Write high part of control data to LCD.
+******************************************************************************/
+{
+  wr_ctrl_LCD_low(( Ch & 0xF0 ) >> 4 );
+}
+
+void out_LCD_low( uint8_t Ch )
+/*****************************************************************************
+*   Input    : Mask
+*   Output   : -
+*   Function : Send low part of character to LCD.
+*              This function works only in 4 bit data mode.
+******************************************************************************/
+{
+    uint8_t temp;
+
+  temp = GPIO_PORTC_DATA_R & 0x0F;
+  GPIO_PORTC_DATA_R  = temp | ((Ch & 0x0F) << 4);
+  //GPIO_PORTD_DATA_R &= 0x7F;        // Select write
+  GPIO_PORTD_DATA_R |= 0x04;        // Select data mode
+  GPIO_PORTD_DATA_R |= 0x08;        // Set E High
+  GPIO_PORTD_DATA_R &= 0xF7;        // Set E Low
+}
+
+void out_LCD_high( uint8_t Ch )
+/*****************************************************************************
+*   Input    : Mask
+*   Output   : -
+*   Function : Send high part of character to LCD.
+*              This function works only in 4 bit data mode.
+******************************************************************************/
+{
+  out_LCD_low((Ch & 0xF0) >> 4);
+}
+
+void wr_ctrl_LCD( uint8_t Ch )
+/*****************************************************************************
+*   Input    : -
+*   Output   : -
+*   Function : Write control data to LCD.
+******************************************************************************/
+{
+  static uint8_t Mode4bit = FALSE;
+  uint16_t i;
+
+  wr_ctrl_LCD_high( Ch );
+  if( Mode4bit )
+  {
+    for(i=0; i<1000; i++);
+    wr_ctrl_LCD_low( Ch );
+  }
+  else
+  {
+    if( (Ch & 0x30) == 0x20 )
+      Mode4bit = TRUE;
+  }
+}
+
+void clr_LCD()
+/*****************************************************************************
+*   Input    : -
+*   Output   : -
+*   Function : Clear LCD.
+******************************************************************************/
+{
+  wr_ctrl_LCD( 0x01 );
+}
+
+
+void home_LCD()
+/*****************************************************************************
+*   Input    : -
+*   Output   : -
+*   Function : Return cursor to the home position.
+******************************************************************************/
+{
+  wr_ctrl_LCD( 0x02 );
+}
+
+void Set_cursor( uint8_t Ch )
+/*****************************************************************************
+*   Input    : New Cursor position
+*   Output   : -
+*   Function : Place cursor at given position.
+******************************************************************************/
+{
+  wr_ctrl_LCD( Ch );
+}
+
+
+void out_LCD( uint8_t Ch )
+/*****************************************************************************
+*   Input    : -
+*   Output   : -
+*   Function : Write control data to LCD.
+******************************************************************************/
+{
+    uint16_t i;
+
+  out_LCD_high( Ch );
+  for(i=0; i<1000; i++);
+
+
+  out_LCD_low( Ch );
+  //for(i=0; i<1000; i++);
+}
+
+
+
+extern void lcd_task(void * pvParameters)
+/*****************************************************************************
+*   Input    :
+*   Output   :
+*   Function :
+******************************************************************************/
+{
+    static my_state = LCD_POWER_UP;
+  uint8_t ch;
+
+  TickType_t xLastWakeTime;
+    xLastWakeTime = xTaskGetTickCount();
+
+    for( ;; )
+    {
+        vTaskDelayUntil (&xLastWakeTime, pdMS_TO_TICKS( 5 ) );
+
+  switch( my_state )
+  {
+    case LCD_POWER_UP:
+      LCD_init = 0;
+      my_state = LCD_INIT ;
+      vTaskDelay(pdMS_TO_TICKS(20) );
+      break;
+
+    case LCD_INIT:
+      if( LCD_init_sequense[LCD_init] != 0xFF )
+        wr_ctrl_LCD( LCD_init_sequense[LCD_init++] );
+      else
+      {
+          my_state =LCD_READY ;
+      }
+      vTaskDelay( pdMS_TO_TICKS( 20) );
+
+      break;
+
+    case LCD_READY:
+      if( xQueueReceive( lcd_queue, &ch, 0 ) == pdPASS )
+      {
+          vTaskDelay(10);
+        switch( ch )
+        {
+          case 0xFF:
+            clr_LCD();
+            break;
+          case ESC:
+              my_state = LCD_ESC_RECEIVED ;
+            break;
+          default:
+            out_LCD( ch );
+            break;
+        }
+      }
+      break;
+
+    case LCD_ESC_RECEIVED:
+      if( xQueueReceive( lcd_queue, &ch, 0 ) == pdPASS)
+      {
+        if( ch & 0x80 )
+        {
+            Set_cursor( ch );
+        }
+        else
+        {
+          switch( ch )
+          {
+            case '@':
+                home_LCD();
+              break;
+          }
+        }
+        my_state =LCD_READY  ;
+        vTaskDelay(pdMS_TO_TICKS(50) );
+      }
+      break;
+  }
+}
+}
+
+
+/****************************** End Of Module *******************************/
+
+
+
+

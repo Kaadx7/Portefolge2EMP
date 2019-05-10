@@ -52,15 +52,21 @@ void digiSwitch_task(void *pvParameters)
   TickType_t xLastWakeTime;
   xLastWakeTime = xTaskGetTickCount();
   digisw_init();
+  bool init = 0;
   for( ;; )
   {
 
     if( GPIO_PORTA_DATA_R & 0x20 ){
       if( digisw_state != DSS_A_ON ){
         if( GPIO_PORTA_DATA_R & 0x40 ){
-          event = DSE_CCW;
-          xQueueSend( digiSwitch_queue,  &event, portMAX_DELAY  );
-          GPIO_PORTF_DATA_R ^= 0x04;
+          if( init == 0 )
+              init = 1;
+          else
+          {
+            event = DSE_CCW;
+            xQueueSend( digiSwitch_queue,  &event, portMAX_DELAY  );
+            GPIO_PORTF_DATA_R ^= 0x04;
+          }
         }
         else{
           event = DSE_CW;

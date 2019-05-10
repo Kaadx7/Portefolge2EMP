@@ -16,6 +16,14 @@
 #include "tm4c123gh6pm.h"
 #include "gpio.h"
 /*****************************    Defines    *******************************/
+// LCD
+#define FALSE   0
+#define TRUE  !FALSE
+#define NULL    ((void *)0)
+#define NEGATIVE 0
+#define POSITIVE 1
+#define LEFT    0
+#define RIGHT   1
 
 // Digiswitch Events
 #define DSE_CW      '1'
@@ -46,6 +54,7 @@ extern SemaphoreHandle_t RTC_SEM;
 /*************************  Queues & Event Groups  *******************************/
 QueueHandle_t keypad_queue;
 QueueHandle_t digiSwitch_queue;
+QueueHandle_t lcd_queue;
 
 /*****************************   Tasks   *******************************/
 extern TaskHandle_t keypad_handle;

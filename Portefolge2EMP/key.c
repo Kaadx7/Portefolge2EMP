@@ -54,9 +54,8 @@ extern void key_task(void * pvParameters)
           y = GPIO_PORTE_DATA_R & 0x0F;
           if( y )
           {
-            if( isPushed = 0 )
+            if( isPushed == 0 )
             {
-                GPIO_PORTF_DATA_R &= 0xFD;
                 ch = key_catch( x, row(y) );
                 xQueueSend( keypad_queue, &ch, 0 );
                 isPushed = 1;
@@ -103,10 +102,11 @@ extern void testkey_task(void * pvParameters)
         {
             received = characterReceived;
         }
-        if( xQueueReceive( keypad_queue, &characterReceived, portMAX_DELAY ) == pdPASS )
-        {
-            received = characterReceived;
-        }
+//        if( xQueueReceive( keypad_queue, &characterReceived, portMAX_DELAY ) == pdPASS )
+//        {
+//            received = characterReceived;
+//            xQueueSend( lcd_queue, &characterReceived, 0 );
+//        }
    }
 
 }

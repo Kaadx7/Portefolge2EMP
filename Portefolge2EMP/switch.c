@@ -40,8 +40,9 @@ void switch_task(void *pvParameters)
     for( ;; )
     {
 
-        // SW1 toggles hook for the trunk
-        if( GPIO_PORTF_DATA_R & 0x10 )
+        // SW2 toggles hook for the trunk
+
+        if( GPIO_PORTF_DATA_R & 0x01 )
             sw1 = 0;
         else
             sw1 = 1;
@@ -74,8 +75,8 @@ void switch_task(void *pvParameters)
 
         if( hook == 1)
         {
-            //SW2 is for valve in handle handle
-            if ( !(GPIO_PORTF_DATA_R & 0x01) )  //Is pushed
+            //SW1 is for valve in handle handle
+            if ( !(GPIO_PORTF_DATA_R & 0x10) )  //Is pushed
                 handle_pressed = 1;
             else
                 handle_pressed = 0;
