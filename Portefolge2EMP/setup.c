@@ -30,6 +30,8 @@ extern void sem_init()
 {
     RTC_SEM = xSemaphoreCreateCounting(1, 1);
 
+    xLCD_mutex= xSemaphoreCreateMutex();
+
 
 
 }

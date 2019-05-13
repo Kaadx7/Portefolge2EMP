@@ -235,7 +235,7 @@ void out_LCD( uint8_t Ch )
 
 
   out_LCD_low( Ch );
-  //for(i=0; i<1000; i++);
+  for(i=0; i<1000; i++);
 }
 
 

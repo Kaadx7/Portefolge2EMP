@@ -18,7 +18,8 @@ uint8_t y;
 uint8_t received = 0;
 uint8_t ch;
 uint8_t x = 1;
-uint8_t state = 0;
+volatile uint8_t state_key = 0;
+
 
 /*****************************   Functions   *******************************/
 
@@ -35,14 +36,14 @@ extern void key_task(void * pvParameters)
 
   for( ;; )
   {
-      vTaskDelayUntil (&xLastWakeTime, pdMS_TO_TICKS( 10 ) );
 
-      switch( state )
+
+      switch( state_key)
       {
         case 0:
           GPIO_PORTA_DATA_R |= 0x04;
           GPIO_PORTF_DATA_R |= 0x0E;
-          state = 1;
+          state_key = 1;
 
           break;
 
@@ -53,11 +54,12 @@ extern void key_task(void * pvParameters)
             GPIO_PORTF_DATA_R &= 0xFD;
             ch = key_catch( x, row(y) );
             xQueueSend( keypad_queue, &ch, 0 );
-            state = 2;
+            state_key = 2;
           }
           else
           {
             x++;
+
             if( x > 3 )
               x = 1;
             GPIO_PORTA_DATA_R &= 0xE3;
@@ -71,10 +73,12 @@ extern void key_task(void * pvParameters)
           {
             x=1;
             GPIO_PORTA_DATA_R |= 0x04;
-            state = 1;
+            state_key = 1;
           }
           break;
       }
+      vTaskDelayUntil (&xLastWakeTime, pdMS_TO_TICKS( 10 ) );
+
   }
 }
 

@@ -17,8 +17,9 @@
 #include "defines.h"
 #include "setup.h"
 #include "key.h"
-
 #include "lcd_driver.h"
+#include "queue.h"
+#include "digisw.h"
 
 /*****************************    Defines    *******************************/
 //#define USERTASK_STACK_SIZE configMINIMAL_STACK_SIZE
@@ -36,6 +37,7 @@
 int main(void)
 {
    init_gpio();
+   sem_init();
 
     // Taskhandles - made extern in defines.h
     // ----------------
@@ -43,22 +45,26 @@ int main(void)
     TaskHandle_t testKeypad_handle = NULL;
     TaskHandle_t lcd_handle = NULL;
 
+    TaskHandle_t switch_handle = NULL;
+    TaskHandle_t digiSwitch_handle = NULL;
 
     // Create queues
     // ----------------
     keypad_queue = xQueueCreate(15, 8);
     lcd_queue = xQueueCreate(15, 8);
-
+    digiSwitch_queue = xQueueCreate(10, 8);
 
     // Start the tasks.
     // ----------------
-    xTaskCreate(key_task, "Keypad task", 100, NULL, 1, &keypad_handle);
-    xTaskCreate(testkey_task, "Test keypad task", 100, NULL, 1, &testKeypad_handle);
+    //xTaskCreate(key_task, "Keypad task", 100, NULL, 1, &keypad_handle);
+    //xTaskCreate(testkey_task, "Test keypad task", 100, NULL, 1, &testKeypad_handle);
     xTaskCreate(lcd_task, "lcd task", 100, NULL, 1, &lcd_handle);
-
+    xTaskCreate(digiSwitch_task, "Digiswitch task", 100, NULL, 1, &digiSwitch_handle);
+    xTaskCreate(switch_task, "SW1 and SW2 task", 100, NULL, 1, &switch_handle);
 
     // Start the scheduler.
     // --------------------
+
     vTaskStartScheduler();
 
 

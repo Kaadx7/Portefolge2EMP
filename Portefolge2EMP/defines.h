@@ -31,13 +31,24 @@
 //extern uint8_t hours = 0;
 
 
+
+
 /*****************************   Semaphores   *******************************/
 extern SemaphoreHandle_t RTC_SEM;
+
+
+/*****************************    Mutexes    *******************************/
+SemaphoreHandle_t xStation_mutex;
+SemaphoreHandle_t xLCD_mutex;
 
 
 /*****************************    Queues    *******************************/
 QueueHandle_t keypad_queue;
 QueueHandle_t lcd_queue;
+
+
+QueueHandle_t xUARTTransmit_queue;
+QueueHandle_t xUARTReceive_queue;
 
 
 /*****************************   Tasks   *******************************/
@@ -55,6 +66,24 @@ extern TaskHandle_t lcd_handle;
 
 
 
+/*****************************    Structs    *******************************/
+
+struct PriceChange {
+    uint8_t type; // 1 for "92", 2 for "95", 3 for "E10"
+    float   new_price;
+};
+
+struct LogEntry {
+    char account_number[6];
+    uint8_t fuel_type;
+    uint8_t payment_type;
+    float fuel_amount;
+    float total_price;
+    uint16_t notes;
+    uint8_t stamp_seconds;
+    uint8_t stamp_minutes;
+    uint8_t stamp_hours;
+};
 
 
 #endif /* DEFINES_H_ */
