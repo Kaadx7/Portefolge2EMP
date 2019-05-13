@@ -72,7 +72,7 @@ int main(void)
     xTaskCreate(key_task, "Keypad task", 100, NULL, 2, &keypad_handle);
     xTaskCreate(testkey_task, "Test keypad task", 100, NULL, 1, &testKeypad_handle);
     xTaskCreate(RTC_task, "Real time clock task", 100, NULL, 1, &RTC_handle);
-    xTaskCreate(pump_task, "Pump task", 100, NULL, 1, &pump_handle);
+    xTaskCreate(pump_task, "Pump task", 100, NULL, 3, &pump_handle);
     xTaskCreate(digiSwitch_task, "Digiswitch task", 100, NULL, 1, &digiSwitch_handle);
     xTaskCreate(switch_task, "SW1 and SW2 task", 100, NULL, 3, &switch_handle); //HIGH PRIORITY
     xTaskCreate(lcd_task, "lcd task", 100, NULL, 1, &lcd_handle);

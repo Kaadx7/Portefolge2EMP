@@ -20,6 +20,13 @@ bool         handle_pressed = 0;
 bool         shunt  = 0;
 bool         pump   = 0;
 
+enum
+{
+    IDLE,
+    SHUNT,
+    MAX_FLOW
+};
+
 /*****************************   Functions   *******************************/
 
 extern void pump_task(void * pvParameters)
@@ -30,27 +37,70 @@ extern void pump_task(void * pvParameters)
 *   Scheduling: Is scheduled by other tasks by vTaskSupend or vTaskResume
 ******************************************************************************/
 {
+    EventBits_t xEventGroupValue;
     TickType_t xLastWakeTime;
+    uint8_t state_pump= IDLE;
     xLastWakeTime = xTaskGetTickCount();
+
 
      for( ;; )
      {
-         if( handle_pressed )
+         switch( state_pump )
          {
-             if( shunt )
-             {
-                 //Shunt activated 0.02 liter every second
-                 vTaskDelayUntil (&xLastWakeTime, 400 ); // With tick Hz set to 9000 this is equal to 22.5 pulses pr. sec
-                 pulses++;
-             }
-             else
-             {
-                 // Normal flow 0.2 liters every second
-                 vTaskDelayUntil (&xLastWakeTime, 40 ); // With tick Hz set to 9000 this is equal to 225 pulses pr. sec
-                 pulses++;
-             }
+         case IDLE:
+             xEventGroupValue = xEventGroupWaitBits(
+                     station_eventgroup,
+                     shunt_ON_event| maxFlow_ON_event, pdFALSE, pdFALSE,
+                     portMAX_DELAY);
+
+             if( xEventGroupValue &  maxFlow_ON_event)
+                 state_pump = MAX_FLOW;
+
+
+             else if (xEventGroupValue &  shunt_ON_event)
+                 state_pump = SHUNT;
+             break;
+
+
+
+         case SHUNT:
+             xEventGroupValue = xEventGroupWaitBits(
+                     station_eventgroup,
+                     maxFlow_OFF_event| maxFlow_ON_event, pdTRUE, pdFALSE,
+                     0);
+
+             if( xEventGroupValue &  maxFlow_ON_event)
+                 state_pump = MAX_FLOW;
+
+             if( xEventGroupValue &  maxFlow_OFF_event)
+                 state_pump = IDLE;
+
+
+             //Shunt activated 0.02 liter every second
+             vTaskDelayUntil (&xLastWakeTime, 400 ); // With tick Hz set to 9000 this is equal to 22.5 pulses pr. sec
+             pulse_counter++;
+             break;
+
+
+
+         case MAX_FLOW:
+             xEventGroupValue = xEventGroupWaitBits(
+                      station_eventgroup,
+                      shunt_ON_event| maxFlow_OFF_event, pdTRUE, pdFALSE,
+                      0);
+
+              if( xEventGroupValue &  maxFlow_OFF_event)
+                  state_pump = IDLE;
+
+              if( xEventGroupValue &  shunt_ON_event)
+                  state_pump = SHUNT;
+
+
+             // Normal flow 0.2 liters every second
+             vTaskDelayUntil (&xLastWakeTime, 40 ); // With tick Hz set to 9000 this is equal to 225 pulses pr. sec
+             pulse_counter++;
+             break;
 
          }
-         vTaskDelay( pdMS_TO_TICKS(1000) );
      }
 }

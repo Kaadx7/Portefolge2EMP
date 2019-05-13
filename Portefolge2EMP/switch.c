@@ -41,7 +41,6 @@ void switch_task(void *pvParameters)
     {
 
         // SW2 toggles hook for the trunk
-
         if( GPIO_PORTF_DATA_R & 0x01 )
             sw1 = 0;
         else
@@ -55,6 +54,7 @@ void switch_task(void *pvParameters)
             else if( sw1 == 0 && sw1_pressed == 1)
             {
                 hook_state = TAKEN;
+                xEventGroupSetBits( station_eventgroup, pump_ON_event );
                 hook = 1;
                 pump = 1;
             }
@@ -70,6 +70,7 @@ void switch_task(void *pvParameters)
                 hook = 0;
                 pump = 0;
                 hook_state = HOOKED;
+                xEventGroupClearBits(station_eventgroup, pump_OFF_event );
             }
 
             break;
@@ -81,11 +82,14 @@ void switch_task(void *pvParameters)
             if ( !(GPIO_PORTF_DATA_R & 0x10) )  //Is pushed
             {
                 //xSemaphoreGive( HANDLE_PRESSED_SEM );
-                xEventGroupSetBits( station_eventgroup, handle_pressed_event );
+                xEventGroupSetBits( station_eventgroup, handle_ON_event );
                 handle_pressed = 1;
             }
             else
+            {
                 handle_pressed = 0;
+                xEventGroupClearBits( station_eventgroup, handle_OFF_event);
+            }
         }
         else
            handle_pressed = 0;

@@ -31,15 +31,23 @@
 #define DSE_PRESS   '3'
 
 // Eventgroup bits
-#define pump_event              (1 << 0)
-#define shunt_event             (1 << 1)
-#define handle_pressed_event    (1 << 2)
-#define shunt_event             (1 << 3)
-#define isPumping               (1 << 4)
-#define station_event           (1 << 5)
-#define price_change_event      (1 << 6)
-#define pulse_event             (1 << 7)
+#define pump_ON_event          (1 << 0)
+#define pump_OFF_event         (1 << 1)
+#define handle_ON_event        (1 << 6)
+#define handle_OFF_event       (1 << 7)
 
+#define shunt_ON_event         (1 << 2)
+#define shunt_OFF_event        (1 << 3)
+#define maxFlow_ON_event       (1 << 4)
+#define maxFlow_OFF_event      (1 << 5)
+
+#define price_change_event     (1 << 8)
+
+
+// Uart protocol and station
+#define FUEL_TYPE_1             1 //Octane 92
+#define FUEL_TYPE_2             2 //Octane 95
+#define FUEL_TYPE_3             3 //E10
 
 
 /*****************************   Constants   *******************************/
@@ -51,12 +59,21 @@ extern uint8_t      minutes;
 extern uint8_t      hours;
 
 // Pump station
-extern float        pulses;
+extern float        pulse_counter;
 extern bool         pump;
 extern bool         hook;
 extern bool         handle_pressed;
 extern bool         shunt;
+extern bool         fueling;
 
+extern bool         customer = 0;
+
+extern float        octane_92_price;
+extern float        octane_95_price;
+extern float        E10_price;
+
+extern uint16_t     fuel_amount = 0;
+extern uint16_t     cash_amount = 0;
 
 
 /*****************************   Semaphores   *******************************/
