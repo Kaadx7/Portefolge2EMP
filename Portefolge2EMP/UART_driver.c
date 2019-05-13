@@ -27,15 +27,20 @@
 #include "UART_driver.h"
 
 //FreeRTOS kernel includes
-
 #include "FreeRTOS.h"
 #include "queue.h"
+
+// Application includes
+#include "define.h"
 
 /*****************************    Defines    *******************************/
 
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
+
+char *receive_character = 0;
+char temp_receive_character = 0;
 
 /*****************************   Functions   *******************************/
 
@@ -217,25 +222,26 @@ void get_uart_message(void)
 
 /*****************************     Tasks     *******************************/
 
-void UARTReceiveDriver (void * pvParameters)
+void UARTReceiveDriverTask (void * pvParameters)
 {
     TickType_t xLastWakeTime;
     xLastWakeTime = xTaskGetTickCount();
-    uint8_t *receive_character = 0;
+
 
     //Queue creation
 
 
     for (;;)
     {
+        GPIO_PORTF_DATA_R ^= 0x08;
         if (uart0_rx_rdy())
         {
-
-            receive_character = uart0_getc();
+            temp_receive_character = uart0_getc();
+            receive_character = &temp_receive_character; // uart0_getc(); //
             xQueueSend(xUARTReceive_queue,  &receive_character, (TickType_t) 0); //
 
         }
-        //GPIO_PORTF_DATA_R ^= 0x08;
+
         //vTaskDelayUntil (&xLastWakeTime, pdMS_TO_TICKS( 50 ) );
         vTaskDelay(pdMS_TO_TICKS( 50 ));
     }
@@ -245,9 +251,9 @@ void UARTTransmitDriverTask (void * pvParameters)
 {
     TickType_t xLastWakeTime;
     xLastWakeTime = xTaskGetTickCount();
+    GPIO_PORTF_DATA_R ^= 0x04;
 
-
-    uint8_t *byte_from_queue = 0;
+    char *byte_from_queue = 0;
 
     for (;;)
     {
@@ -256,7 +262,9 @@ void UARTTransmitDriverTask (void * pvParameters)
             if (uart0_tx_rdy())
             {
                 uart0_putc(byte_from_queue); // Transmit byte to PC
+                vTaskDelay(pdMS_TO_TICKS( 50 ));
             }
+
         }
     }
 }

@@ -8,6 +8,12 @@
 #ifndef DEFINE_H_
 #define DEFINE_H_
 
+/***************************** Include files *******************************/
+/* Kernel includes. */
+#include "FreeRTOS.h"
+#include "queue.h"
+#include "semphr.h"
+
 /*****************************    Structs    *******************************/
 
 struct PriceChange {
@@ -27,9 +33,17 @@ struct LogEntry {
     uint8_t stamp_hours;
 };
 
+/*****************************    Queues     *******************************/
 
 QueueHandle_t xUARTTransmit_queue;
 QueueHandle_t xUARTReceive_queue;
+
+/*****************************    Mutexes    *******************************/
+SemaphoreHandle_t xStation_mutex;
+SemaphoreHandle_t xDataLog_mutex;
+
+//
+EventGroupHandle_t station_eventgroup;
 
 #endif /* DEFINE_H_ */
 
