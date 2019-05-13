@@ -29,6 +29,7 @@ extern void init_sem()
 ******************************************************************************/
 {
     RTC_SEM = xSemaphoreCreateCounting(1, 1);
+    //HANDLE_PRESSED_SEM = xSemaphoreCreateCounting(1,0);
 
 
 

@@ -18,6 +18,12 @@
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
+enum state
+{
+    IDLE,
+    PUMP_ACTIVE
+
+};
 
 /*****************************   Functions   *******************************/
 
@@ -28,7 +34,26 @@ extern void station_task(void * pvParameters)
 *   Function : -
 ******************************************************************************/
 {
+    EventBits_t xEventGroupValue;
+    uint8_t state = 0;
+    const EventBits_t uxBitsToWaitFor =  { pump_event | shunt_event | handle_pressed_event |
+                                           shunt_event | isPumping | station_event |
+                                           price_change_event | pulse_event};
+    for( ;; )
+    {
+        xEventGroupValue = xEventGroupWaitBits(
+                station_eventgroup,
+                handle_pressed_event,
+                pdTRUE,
+                pdFALSE,
+                portMAX_DELAY);
 
+
+        if( (xEventGroupValue & handle_pressed_event) != 0)
+        {
+
+        }
+    }
 
 
 

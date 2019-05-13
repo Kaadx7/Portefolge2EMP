@@ -23,6 +23,7 @@
 #include "pulse.h"
 #include "digisw.h"
 #include "switch.h"
+#include "station.h"
 
 
 #include "lcd_driver.h"
@@ -53,9 +54,11 @@ int main(void)
     TaskHandle_t pump_handle = NULL;
     TaskHandle_t digiSwitch_handle = NULL;
     TaskHandle_t switch_handle = NULL;
+    TaskHandle_t station_task_handle = NULL;
 
     TaskHandle_t testKeypad_handle = NULL;
 
+    station_eventgroup = xEventGroupCreate();
 
     // Create queues
     // ----------------
@@ -71,8 +74,9 @@ int main(void)
     xTaskCreate(RTC_task, "Real time clock task", 100, NULL, 1, &RTC_handle);
     xTaskCreate(pump_task, "Pump task", 100, NULL, 1, &pump_handle);
     xTaskCreate(digiSwitch_task, "Digiswitch task", 100, NULL, 1, &digiSwitch_handle);
-    xTaskCreate(switch_task, "SW1 and SW2 task", 100, NULL, 1, &switch_handle);
+    xTaskCreate(switch_task, "SW1 and SW2 task", 100, NULL, 3, &switch_handle); //HIGH PRIORITY
     xTaskCreate(lcd_task, "lcd task", 100, NULL, 1, &lcd_handle);
+    xTaskCreate(station_task, "station logic task", 100, NULL, 1, &station_task_handle);
 
     // Start the scheduler.
     // --------------------

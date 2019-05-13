@@ -56,6 +56,7 @@ void switch_task(void *pvParameters)
             {
                 hook_state = TAKEN;
                 hook = 1;
+                pump = 1;
             }
             break;
 
@@ -67,6 +68,7 @@ void switch_task(void *pvParameters)
             else if( sw1 == 0 && sw1_pressed == 0)
             {
                 hook = 0;
+                pump = 0;
                 hook_state = HOOKED;
             }
 
@@ -77,7 +79,11 @@ void switch_task(void *pvParameters)
         {
             //SW1 is for valve in handle handle
             if ( !(GPIO_PORTF_DATA_R & 0x10) )  //Is pushed
+            {
+                //xSemaphoreGive( HANDLE_PRESSED_SEM );
+                xEventGroupSetBits( station_eventgroup, handle_pressed_event );
                 handle_pressed = 1;
+            }
             else
                 handle_pressed = 0;
         }

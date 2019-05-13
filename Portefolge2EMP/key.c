@@ -98,15 +98,15 @@ extern void testkey_task(void * pvParameters)
 {
     for( ;; )
     {
-        if( xQueueReceive( digiSwitch_queue, &characterReceived, portMAX_DELAY ) == pdPASS )
-        {
-            received = characterReceived;
-        }
-//        if( xQueueReceive( keypad_queue, &characterReceived, portMAX_DELAY ) == pdPASS )
+//        if( xQueueReceive( digiSwitch_queue, &characterReceived, portMAX_DELAY ) == pdPASS )
 //        {
 //            received = characterReceived;
-//            xQueueSend( lcd_queue, &characterReceived, 0 );
 //        }
+        if( xQueueReceive( keypad_queue, &characterReceived, portMAX_DELAY ) == pdPASS )
+        {
+            received = characterReceived;
+            xQueueSend( lcd_queue, &characterReceived, 0 );
+        }
    }
 
 }

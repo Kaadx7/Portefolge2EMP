@@ -49,11 +49,11 @@ void init_gpio(void)
 
 
   /*PORT D setup*/
-  // Set the direction as output (PD6).
-  GPIO_PORTD_DIR_R = 0x40;
-
-  // Enable the GPIO pins for digital function (PD6).
-  GPIO_PORTD_DEN_R = 0x40;
+//  // Set the direction as output (PD6).
+//  GPIO_PORTD_DIR_R = 0x40;
+//
+//  // Enable the GPIO pins for digital function (PD6).
+//  GPIO_PORTD_DEN_R = 0x40;
 
 
 }
