@@ -38,9 +38,9 @@
 #define UART_WAITING_FOR_QUEUE   0
 #define UART_COMMAND_READY       1
 
-#define FUEL_TYPE_1             1
-#define FUEL_TYPE_2             2
-#define FUEL_TYPE_3             3
+#define FUEL_TYPE_1             1 //Octane 92
+#define FUEL_TYPE_2             2 //Octane 95
+#define FUEL_TYPE_3             3 //E10
 
 /*****************************    Macros     *******************************/
 #define NELEMS(x)  (sizeof(x) / sizeof((x)[0]))
@@ -249,9 +249,9 @@ void UARTProtocolTask (void * pvParameters)
                         xQueueReceive( xUARTReceive_queue, &byte_from_UART_queue , ( TickType_t ) 0 );
                         temp_new_price += (*byte_from_UART_queue-48)*0.01;
 
-                        price_change_event.new_price = temp_new_price;
+                        //price_change_event.new_price = temp_new_price;
 
-                        xEventGroupSetBits(station_eventgroup, price_change_event);
+                        //xEventGroupSetBits(station_eventgroup, price_change_event);
                         xSemaphoreGive(xStation_mutex);
                     }
 

@@ -226,6 +226,7 @@ void UARTReceiveDriverTask (void * pvParameters)
 {
     TickType_t xLastWakeTime;
     xLastWakeTime = xTaskGetTickCount();
+    uint8_t test_var = 0;
 
 
     //Queue creation
@@ -233,17 +234,28 @@ void UARTReceiveDriverTask (void * pvParameters)
 
     for (;;)
     {
-        GPIO_PORTF_DATA_R ^= 0x08;
-        if (uart0_rx_rdy())
+//        GPIO_PORTF_DATA_R ^= 0x08;
+//        if (uart0_rx_rdy())
+//        {
+//            temp_receive_character = uart0_getc();
+//            receive_character = &temp_receive_character; // uart0_getc(); //
+//            xQueueSend(xUARTReceive_queue,  &receive_character, (TickType_t) 0); //
+//
+//        }
+        if (test_var)
         {
-            temp_receive_character = uart0_getc();
-            receive_character = &temp_receive_character; // uart0_getc(); //
-            xQueueSend(xUARTReceive_queue,  &receive_character, (TickType_t) 0); //
-
+            xEventGroupSetBits(LEDs_eventgroup, pump_ON_event ); // | shunt_ON_event);
+            test_var = 0;
+        }
+        else
+        {
+            //xEventGroupClearBits(station_eventgroup, pump_event | shunt_event);
+            xEventGroupSetBits(LEDs_eventgroup, pump_OFF_event ); //| shunt_OFF_event);
+            test_var = 1;
         }
 
         //vTaskDelayUntil (&xLastWakeTime, pdMS_TO_TICKS( 50 ) );
-        vTaskDelay(pdMS_TO_TICKS( 50 ));
+        vTaskDelay(pdMS_TO_TICKS( 2000 ));
     }
 }
 

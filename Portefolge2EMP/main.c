@@ -11,11 +11,13 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "semphr.h"
+#include "event_groups.h"
 
 /* Hardware includes. */
 #include "tm4c123gh6pm.h"
 #include "gpio.h"
 #include "UART_driver.h"
+#include "LED_driver.h"
 
 /* Application includes */
 #include "UART_protocol.h"
@@ -47,9 +49,17 @@ int main(void)
     // Create queues
     xUARTTransmit_queue = xQueueCreate ( 10, 8 );
     xUARTReceive_queue = xQueueCreate ( 10, 8 );
+    keypad_queue = xQueueCreate( 15, 8 );
 
     // event groups
     station_eventgroup = xEventGroupCreate();
+    LEDs_eventgroup = xEventGroupCreate();
+
+//    for (uint32_t i = 0; i < 16000000; i++)
+//    {
+//        ;
+//    }
+
 
     //xSemaphoreTake();
     // Start the tasks.
@@ -59,9 +69,11 @@ int main(void)
 
 
 
-    xTaskCreate(UARTProtocolTask, "UART Protocol", 600, NULL, 2, NULL );
-    xTaskCreate(UARTTransmitDriverTask, "UART Transmit Driver", 100, NULL, 1, NULL );
+    //xTaskCreate(UARTProtocolTask, "UART Protocol", 600, NULL, 2, NULL );
+    //xTaskCreate(UARTTransmitDriverTask, "UART Transmit Driver", 100, NULL, 1, NULL );
     xTaskCreate(UARTReceiveDriverTask, "UART Receive Driver", 100, NULL, 1, NULL );
+    xTaskCreate(LEDDriverTask, "LED Driver", 100, NULL, 1, NULL);
+    xTaskCreate(UICustomerTask, "UI Customer", 100, NULL, 1, NULL);
 
 
 
