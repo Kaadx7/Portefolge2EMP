@@ -66,14 +66,14 @@ extern bool         handle_pressed;
 extern bool         shunt;
 extern bool         fueling;
 
-extern bool         customer = 0;
+extern bool         customer;
 
 extern float        octane_92_price;
 extern float        octane_95_price;
 extern float        E10_price;
 
-extern uint16_t     fuel_amount = 0;
-extern uint16_t     cash_amount = 0;
+extern uint16_t     fuel_amount;
+extern uint16_t     cash_amount;
 
 
 /*****************************   Semaphores   *******************************/

@@ -26,8 +26,19 @@ enum
     SHUNT_ACTIVE
 };
 
-uint16_t temp_pulse = 0;
-uint8_t shunt_state = 0;
+uint16_t        temp_pulse = 0;
+uint8_t         shunt_state = 0;
+uint16_t        fuel_amount = 0;
+uint16_t        cash_amount = 0;
+
+float        pulse_counter;
+bool         pump;
+bool         hook;
+bool         handle_pressed;
+bool         shunt;
+bool         fueling;
+
+bool         customer = 0;
 
 /*****************************   Functions   *******************************/
 
@@ -104,7 +115,10 @@ extern void station_task(void * pvParameters)
                 price_change();
 
             else if(xEventGroupValue &  pump_ON_event)
+            {
                 state_station = PUMP_ACTIVE;
+                //Set LED
+            }
             break;
 
 
@@ -202,7 +216,7 @@ extern void station_task(void * pvParameters)
 
             //Put in LCD buffer
 
-            }
+
             break;
 
 
