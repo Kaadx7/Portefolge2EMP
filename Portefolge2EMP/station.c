@@ -28,7 +28,7 @@ enum
 
 uint16_t temp_pulse = 0;
 uint8_t shunt_state = 0;
-
+//Tilføj globale variable og fjern assignment i defines.h
 /*****************************   Functions   *******************************/
 
 void end_customer()
@@ -202,9 +202,7 @@ extern void station_task(void * pvParameters)
 
             //Put in LCD buffer
 
-            }
             break;
-
 
         }
 

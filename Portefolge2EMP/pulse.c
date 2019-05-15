@@ -19,7 +19,7 @@ float        pulses = 0;
 bool         handle_pressed = 0;
 bool         shunt  = 0;
 bool         pump   = 0;
-
+float        pulse_counter;
 enum
 {
     IDLE,
