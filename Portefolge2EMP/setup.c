@@ -17,7 +17,9 @@
 
 /****************************   Semaphores   *******************************/
 SemaphoreHandle_t RTC_SEM;
-
+SemaphoreHandle_t PULSE_COUNTER_SEM;
+SemaphoreHandle_t xStation_mutex;
+SemaphoreHandle_t xDataLog_mutex;
 
 /*****************************   Functions   *******************************/
 
@@ -29,9 +31,21 @@ extern void init_sem()
 ******************************************************************************/
 {
     RTC_SEM = xSemaphoreCreateCounting(1, 1);
-    //HANDLE_PRESSED_SEM = xSemaphoreCreateCounting(1,0);
+    PULSE_COUNTER_SEM = xSemaphoreCreateCounting(1,1);
 
+    xStation_mutex = xSemaphoreCreateMutex();
+    if( xStation_mutex != NULL )
+    {
+        /* The semaphore was created successfully and
+        can be used. */
+    }
 
+    xDataLog_mutex = xSemaphoreCreateMutex();
+    if( xDataLog_mutex != NULL )
+    {
+        /* The semaphore was created successfully and
+        can be used. */
+    }
 
 }
 

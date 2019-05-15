@@ -24,6 +24,10 @@
 #include "digisw.h"
 #include "switch.h"
 #include "station.h"
+#include "LED_driver.h"
+#include "UART_driver.h"
+#include "UART_protocol.h"
+#include "CustomerUI.h"
 
 
 #include "lcd_driver.h"
@@ -45,6 +49,7 @@ int main(void)
 {
     init_gpio();
     init_sem();
+    uart0_init(9600, 8, 1, 'e');
 
     // Taskhandles - made extern in defines.h
     // ----------------
@@ -55,16 +60,23 @@ int main(void)
     TaskHandle_t digiSwitch_handle = NULL;
     TaskHandle_t switch_handle = NULL;
     TaskHandle_t station_task_handle = NULL;
-
     TaskHandle_t testKeypad_handle = NULL;
+    TaskHandle_t UARTProtocol_handle = NULL;
+    TaskHandle_t UARTTransmitDriver_handle = NULL;
+    TaskHandle_t UARTReceiveDriver_handle = NULL;
+    TaskHandle_t LEDDriver_handle = NULL;
+    TaskHandle_t UICustomer_handle = NULL;
 
     station_eventgroup = xEventGroupCreate();
+    LEDs_eventgroup = xEventGroupCreate();
 
     // Create queues
     // ----------------
     keypad_queue = xQueueCreate(15, 8);
     digiSwitch_queue = xQueueCreate(10, 8);
     lcd_queue = xQueueCreate(15, 8);
+    xUARTTransmit_queue = xQueueCreate ( 10, 8 );
+    xUARTReceive_queue = xQueueCreate ( 10, 8 );
 
 
     // Start the tasks.
@@ -73,10 +85,19 @@ int main(void)
     xTaskCreate(testkey_task, "Test keypad task", 100, NULL, 1, &testKeypad_handle);
     xTaskCreate(RTC_task, "Real time clock task", 100, NULL, 1, &RTC_handle);
     xTaskCreate(pump_task, "Pump task", 100, NULL, 3, &pump_handle);
-    xTaskCreate(digiSwitch_task, "Digiswitch task", 100, NULL, 1, &digiSwitch_handle);
-    xTaskCreate(switch_task, "SW1 and SW2 task", 100, NULL, 3, &switch_handle); //HIGH PRIORITY
+    xTaskCreate(digiSwitch_task, "Digiswitch task", 50, NULL, 1, &digiSwitch_handle);
+    xTaskCreate(switch_task, "SW1 and SW2 task", 50, NULL, 3, &switch_handle); //HIGH PRIORITY
     xTaskCreate(lcd_task, "lcd task", 100, NULL, 1, &lcd_handle);
-    xTaskCreate(station_task, "station logic task", 100, NULL, 1, &station_task_handle);
+    xTaskCreate(station_task, "station logic task", 200, NULL, 1, &station_task_handle);
+
+    xTaskCreate(UARTProtocolTask, "UART Protocol", 600, NULL, 2, &UARTProtocol_handle );
+    xTaskCreate(UARTTransmitDriverTask, "UART Transmit Driver", 100, NULL, 1, &UARTTransmitDriver_handle );
+    xTaskCreate(UARTReceiveDriverTask, "UART Receive Driver", 100, NULL, 1, &UARTReceiveDriver_handle );
+    xTaskCreate(LEDDriverTask, "LED Driver", 100, NULL, 1, &LEDDriver_handle);
+
+    // Does not compile with this task active
+    //xTaskCreate(UICustomerTask, "UI Customer", 100, NULL, 1, &UICustomer_handle);
+
 
     // Start the scheduler.
     // --------------------

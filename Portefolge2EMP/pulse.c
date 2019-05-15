@@ -20,13 +20,14 @@ bool         handle_pressed = 0;
 bool         shunt  = 0;
 bool         pump   = 0;
 
+SemaphoreHandle_t PULSE_COUNTER_SEM;
+
 enum
 {
     IDLE,
     SHUNT,
     MAX_FLOW
 };
-
 /*****************************   Functions   *******************************/
 
 extern void pump_task(void * pvParameters)
@@ -78,7 +79,9 @@ extern void pump_task(void * pvParameters)
 
              //Shunt activated 0.02 liter every second
              vTaskDelayUntil (&xLastWakeTime, 400 ); // With tick Hz set to 9000 this is equal to 22.5 pulses pr. sec
+             xSemaphoreTake(PULSE_COUNTER_SEM, portMAX_DELAY);
              pulse_counter++;
+             xSemaphoreGive(PULSE_COUNTER_SEM);
              break;
 
 
@@ -98,7 +101,9 @@ extern void pump_task(void * pvParameters)
 
              // Normal flow 0.2 liters every second
              vTaskDelayUntil (&xLastWakeTime, 40 ); // With tick Hz set to 9000 this is equal to 225 pulses pr. sec
+             xSemaphoreTake(PULSE_COUNTER_SEM, portMAX_DELAY);
              pulse_counter++;
+             xSemaphoreGive(PULSE_COUNTER_SEM);
              break;
 
          }

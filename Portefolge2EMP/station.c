@@ -4,6 +4,9 @@
 #include <stddef.h>
 #include "stdbool.h"
 #include "tm4c123gh6pm.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "semphr.h"
 
 
 #include "defines.h"
@@ -28,7 +31,7 @@ enum
 
 uint16_t        temp_pulse = 0;
 uint8_t         shunt_state = 0;
-uint16_t        fuel_amount = 0;
+uint16_t        fuel_amount = 1110;
 uint16_t        cash_amount = 0;
 
 float        pulse_counter;
@@ -40,7 +43,54 @@ bool         fueling;
 
 bool         customer = 0;
 
+extern SemaphoreHandle_t RTC_SEM;
+extern SemaphoreHandle_t PULSE_COUNTER_SEM;
+extern SemaphoreHandle_t xStation_mutex;
+extern SemaphoreHandle_t xDataLog_mutex;
 /*****************************   Functions   *******************************/
+
+void lcd_fuelAmount(float number)
+/*****************************************************************************
+*   Input    : -
+*   Output   : -
+*   Function : -
+******************************************************************************/
+{
+    uint8_t temp;
+    if((number - 10) < 0)
+    {
+        temp = (uint8_t)number;
+        wr_ch_LCD(temp+'0');
+    }
+    else if((number - 100) < 0)
+    {
+        temp = (uint8_t)number/10;
+        wr_ch_LCD(temp+'0');
+        temp = (uint8_t)number % 10;
+        wr_ch_LCD(temp+'0');
+    }
+    else if((number - 1000) < 0)
+    {
+        temp = (uint8_t)number/100;
+        wr_ch_LCD(temp+'0');
+        temp = ((uint8_t)number % 100) / 10;
+        wr_ch_LCD(temp+'0');
+        temp = (uint8_t)number % 10;
+        wr_ch_LCD(temp+'0');
+    }
+    else if((number - 10000) < 0)
+    {
+
+    }
+    else if((number - 100000) < 0)
+    {
+
+    }
+    else
+    {
+
+    }
+}
 
 void end_customer()
 /*****************************************************************************
@@ -65,7 +115,9 @@ void new_customer()
 ******************************************************************************/
 {
     customer = 1;
+    xSemaphoreTake(PULSE_COUNTER_SEM, portMAX_DELAY);
     pulse_counter = 0;
+    xSemaphoreGive(PULSE_COUNTER_SEM);
     // Also calculate amount of cash to amount of gasoline into fuel_amount
 }
 
@@ -101,15 +153,18 @@ extern void station_task(void * pvParameters)
 {
     EventBits_t xEventGroupValue;
     uint8_t state_station = 0;
+    TickType_t xLastWakeTime;
+    xLastWakeTime = xTaskGetTickCount();
 
     for( ;; )
     {
         switch ( state_station )
         {
         case IDLE:
-            xEventGroupValue = xEventGroupWaitBits(station_eventgroup,
-                            pump_ON_event | price_change_event, pdTRUE, pdFALSE,
-                            portMAX_DELAY);
+            xEventGroupValue = xEventGroupWaitBits(
+                    station_eventgroup,
+                    pump_ON_event | price_change_event, pdTRUE, pdFALSE,
+                    portMAX_DELAY);
 
             if( xEventGroupValue &  price_change_event)
                 price_change();
@@ -117,10 +172,9 @@ extern void station_task(void * pvParameters)
             else if(xEventGroupValue &  pump_ON_event)
             {
                 state_station = PUMP_ACTIVE;
-                //Set LED
+                xEventGroupSetBits(LEDs_eventgroup, LED_pump_ON_event);
             }
             break;
-
 
 
         case PUMP_ACTIVE:
@@ -130,19 +184,20 @@ extern void station_task(void * pvParameters)
 
             xEventGroupValue = xEventGroupWaitBits(station_eventgroup,
                     handle_ON_event | pump_OFF_event, pdTRUE, pdFALSE,
-                    portMAX_DELAY);
+                    0);
 
             if(xEventGroupValue &  handle_ON_event)
             {
-                //ALSO SET LED
                 state_station = SHUNT_ACTIVE;
                 xEventGroupSetBits(station_eventgroup, shunt_ON_event);
+                xEventGroupSetBits(LEDs_eventgroup, LED_shunt_ON_event);
             }
 
             //End customer
             else if(xEventGroupValue &  pump_OFF_event)
             {
                 end_customer();
+                xEventGroupSetBits(LEDs_eventgroup, LED_pump_OFF_event);
                 state_station = IDLE;
             }
 
@@ -155,13 +210,14 @@ extern void station_task(void * pvParameters)
         case MAX_FUEL_FLOW:
             xEventGroupValue = xEventGroupWaitBits( station_eventgroup,
                                      handle_OFF_event, pdTRUE, pdFALSE,
-                                     portMAX_DELAY);
+                                     0);
 
-            if(xEventGroupValue &  handle_OFF_event)
+            if( xEventGroupValue &  handle_OFF_event )
             {
                 //SHUT OFF LED
                 state_station = PUMP_ACTIVE;
                 xEventGroupSetBits(station_eventgroup, maxFlow_OFF_event);
+                xEventGroupSetBits(LEDs_eventgroup, LED_pump_OFF_event);
             }
 
             //Almost done fueling, activate shunt
@@ -169,7 +225,7 @@ extern void station_task(void * pvParameters)
             {
                 state_station = SHUNT_ACTIVE;
                 xEventGroupSetBits(station_eventgroup, shunt_ON_event);
-                //Do something with leds
+                xEventGroupSetBits(LEDs_eventgroup, LED_shunt_ON_event);
             }
 
             //Do some LCD update
@@ -186,14 +242,14 @@ extern void station_task(void * pvParameters)
 
             xEventGroupValue = xEventGroupWaitBits( station_eventgroup,
                                 handle_OFF_event, pdTRUE, pdFALSE,
-                                portMAX_DELAY);
+                                0);
 
             if(xEventGroupValue &  handle_OFF_event)
             {
-                //SHUT OFF LED
+                shunt_state = 0;
                 state_station = PUMP_ACTIVE;
                 xEventGroupSetBits(station_eventgroup, maxFlow_OFF_event);
-                shunt_state = 0;
+                xEventGroupSetBits(LEDs_eventgroup, LED_shunt_OFF_event);
             }
 
             //Check if more than 0.1 Liter has been given
@@ -201,27 +257,29 @@ extern void station_task(void * pvParameters)
             {
                 shunt_state = 0;
                 state_station = MAX_FUEL_FLOW;
+                xEventGroupSetBits(LEDs_eventgroup, LED_shunt_OFF_event);
                 xEventGroupSetBits(station_eventgroup, maxFlow_ON_event);
-                // DO something with led
             }
 
             if(pulse_counter/1125 >= fuel_amount)
             {
-                xEventGroupSetBits(station_eventgroup, maxFlow_OFF_event);
                 state_station = IDLE;
                 shunt_state = 0;
                 end_customer();
-                //Turn off some LEDS
+                xEventGroupSetBits(station_eventgroup, maxFlow_OFF_event);
+                xEventGroupSetBits(LEDs_eventgroup, LED_pump_OFF_event);
             }
 
+            xSemaphoreTake(PULSE_COUNTER_SEM, portMAX_DELAY);
+            wr_ch_LCD(0xFF);
+            lcd_fuelAmount(pulse_counter);
+            xSemaphoreGive(PULSE_COUNTER_SEM);
             //Put in LCD buffer
 
-
             break;
-
-
         }
 
+        vTaskDelayUntil (&xLastWakeTime, pdMS_TO_TICKS(25) );
     }
 
 }

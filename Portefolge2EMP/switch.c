@@ -20,8 +20,13 @@
 /*****************************   Constants   *******************************/
 
 /*****************************   Variables   *******************************/
-uint8_t hook_state = HOOKED;
+uint8_t      hook_state = HOOKED;
+
 bool hook = 0;
+bool pump;
+
+SemaphoreHandle_t RTC_SEM;
+SemaphoreHandle_t HANDLE_PRESSED_SEM;
 
 /*****************************   Functions   *******************************/
 
@@ -70,7 +75,7 @@ void switch_task(void *pvParameters)
                 hook = 0;
                 pump = 0;
                 hook_state = HOOKED;
-                xEventGroupClearBits(station_eventgroup, pump_OFF_event );
+                xEventGroupSetBits(station_eventgroup, pump_OFF_event );
             }
 
             break;
@@ -88,7 +93,7 @@ void switch_task(void *pvParameters)
             else
             {
                 handle_pressed = 0;
-                xEventGroupClearBits( station_eventgroup, handle_OFF_event);
+                xEventGroupSetBits( station_eventgroup, handle_OFF_event);
             }
         }
         else
@@ -96,15 +101,15 @@ void switch_task(void *pvParameters)
 
 
         //if ( GPIO_PORTF_DATA_R & 0x01 )
-        if( hook == 1 )
-            GPIO_PORTF_DATA_R |= 0x02;
-        else
-            GPIO_PORTF_DATA_R &= ~(0x02);
-
-        if( handle_pressed == 1)
-            GPIO_PORTF_DATA_R |= 0x08;
-        else
-            GPIO_PORTF_DATA_R &= ~(0x08);
+//        if( hook == 1 )
+//            GPIO_PORTF_DATA_R |= 0x02;
+//        else
+//            GPIO_PORTF_DATA_R &= ~(0x02);
+//
+//        if( handle_pressed == 1)
+//            GPIO_PORTF_DATA_R |= 0x08;
+//        else
+//            GPIO_PORTF_DATA_R &= ~(0x08);
 
         vTaskDelayUntil (&xLastWakeTime, pdMS_TO_TICKS(25) );
     }
