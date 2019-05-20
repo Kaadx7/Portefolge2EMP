@@ -1,3 +1,4 @@
+
 #include <stdint.h>
 #include <stdio.h>
 #include <stddef.h>
@@ -6,7 +7,6 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "semphr.h"
-
 #include "defines.h"
 #include "setup.h"
 #include "pulse.h"
@@ -51,7 +51,7 @@ extern void pump_task(void * pvParameters)
          case IDLE:
              xEventGroupValue = xEventGroupWaitBits(
                      station_eventgroup,
-                     shunt_ON_event| maxFlow_ON_event, pdFALSE, pdFALSE,
+                     shunt_ON_event| maxFlow_ON_event, pdTRUE, pdFALSE,
                      portMAX_DELAY);
 
              if( xEventGroupValue &  maxFlow_ON_event)

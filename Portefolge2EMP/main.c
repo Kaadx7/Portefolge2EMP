@@ -94,9 +94,9 @@ int main(void)
     xTaskCreate(UARTTransmitDriverTask, "UART Transmit Driver", 100, NULL, 1, &UARTTransmitDriver_handle );
     xTaskCreate(UARTReceiveDriverTask, "UART Receive Driver", 100, NULL, 1, &UARTReceiveDriver_handle );
     xTaskCreate(LEDDriverTask, "LED Driver", 100, NULL, 1, &LEDDriver_handle);
-
-    // Does not compile with this task active
     //xTaskCreate(UICustomerTask, "UI Customer", 100, NULL, 1, &UICustomer_handle);
+    // Does not compile with this task active
+
 
 
     // Start the scheduler.

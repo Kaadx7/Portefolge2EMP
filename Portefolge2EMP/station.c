@@ -56,26 +56,26 @@ void lcd_fuelAmount(float number)
 *   Function : -
 ******************************************************************************/
 {
-    uint8_t temp;
+    uint16_t temp;
     if((number - 10) < 0)
     {
-        temp = (uint8_t)number;
+        temp = (uint16_t)number;
         wr_ch_LCD(temp+'0');
     }
     else if((number - 100) < 0)
     {
-        temp = (uint8_t)number/10;
+        temp = (uint16_t)number/10;
         wr_ch_LCD(temp+'0');
-        temp = (uint8_t)number % 10;
+        temp = (uint16_t)number % 10;
         wr_ch_LCD(temp+'0');
     }
     else if((number - 1000) < 0)
     {
-        temp = (uint8_t)number/100;
+        temp = (uint16_t)number/100;
         wr_ch_LCD(temp+'0');
-        temp = ((uint8_t)number % 100) / 10;
+        temp = ((uint16_t)number % 100) / 10;
         wr_ch_LCD(temp+'0');
-        temp = (uint8_t)number % 10;
+        temp = (uint16_t)number % 10;
         wr_ch_LCD(temp+'0');
     }
     else if((number - 10000) < 0)
@@ -174,6 +174,11 @@ extern void station_task(void * pvParameters)
                 state_station = PUMP_ACTIVE;
                 xEventGroupSetBits(LEDs_eventgroup, LED_pump_ON_event);
             }
+            xSemaphoreTake(PULSE_COUNTER_SEM, portMAX_DELAY);
+            wr_ch_LCD(0xFF);
+            pulse_counter = 0;
+            xSemaphoreGive(PULSE_COUNTER_SEM);
+
             break;
 
 
